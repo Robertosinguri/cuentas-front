@@ -192,6 +192,7 @@ export class DashboardComponent implements OnInit {
     billToDelete: Bill | null = null;
     viewMode: 'table' | 'calendar' | 'reports' = 'table';
     activeFilter = 'Todas';
+    billDetailSheet: Bill | null = null; // Para el modal de detalle móvil
 
     changeMonth(m: any) {
         this.selectedMonth.next(Number(m));
@@ -225,7 +226,16 @@ export class DashboardComponent implements OnInit {
 
     editBill(bill: Bill) {
         this.selectedBill = bill;
+        this.billDetailSheet = null; // cerrar sheet si estuviera abierto
         this.showModal = true;
+    }
+
+    openBillDetail(bill: Bill) {
+        this.billDetailSheet = bill;
+    }
+
+    closeBillDetail() {
+        this.billDetailSheet = null;
     }
 
     getDaysClass(bill: Bill): string {

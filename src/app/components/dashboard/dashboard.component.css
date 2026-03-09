@@ -990,3 +990,284 @@ nav a:hover {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* ===================================================
+   MOBILE BILL CARDS + DETAIL BOTTOM SHEET
+   =================================================== */
+
+/* Ocultar lista móvil en escritorio */
+.mobile-bill-list {
+    display: none;
+}
+
+/* Tabla solo visible en escritorio */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Lista de tarjetas mobile */
+    .mobile-bill-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .mobile-bill-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: white;
+        border-radius: 1rem;
+        border: 1px solid #e2e8f0;
+        padding: 0.9rem 1rem;
+        cursor: pointer;
+        transition: box-shadow 0.2s, transform 0.15s;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-bill-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .mobile-bill-card.paid-card {
+        opacity: 0.6;
+    }
+
+    .mobile-bill-card .cat-dot {
+        width: 12px;
+        height: 12px;
+        flex-shrink: 0;
+    }
+
+    .mobile-bill-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        min-width: 0;
+    }
+
+    .mobile-bill-name {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #1e293b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .mobile-bill-date {
+        font-size: 0.75rem;
+        color: #94a3b8;
+    }
+
+    .mobile-bill-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+        flex-shrink: 0;
+    }
+
+    .mobile-bill-amount {
+        font-weight: 800;
+        font-size: 0.95rem;
+        color: #1e293b;
+    }
+
+    .mobile-chevron {
+        color: #cbd5e1;
+        font-size: 1.2rem !important;
+        flex-shrink: 0;
+    }
+
+    .mobile-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
+        color: #94a3b8;
+        gap: 0.5rem;
+    }
+
+    .mobile-empty .material-icons {
+        font-size: 2.5rem;
+    }
+}
+
+/* Bottom Sheet Overlay (funciona en todos los tamaños pero diseñado para mobile) */
+.detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 500;
+    display: flex;
+    align-items: flex-end;
+}
+
+.detail-sheet {
+    background: white;
+    border-radius: 2rem 2rem 0 0;
+    width: 100%;
+    max-height: 88dvh;
+    overflow-y: auto;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+.detail-sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    margin: 0.75rem auto 0;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem 0.5rem;
+}
+
+.detail-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.detail-title-row h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.cat-dot.large {
+    width: 16px;
+    height: 16px;
+}
+
+.detail-close {
+    background: #f1f5f9;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.detail-body {
+    padding: 0.5rem 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-row .material-icons {
+    color: #94a3b8;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.72rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.amount-big {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #2563eb;
+}
+
+.provisional-row {
+    color: #ef4444;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem 1.5rem;
+}
+
+.detail-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.85rem 0.5rem;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.detail-btn.pay {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.detail-btn.pay:active {
+    background: #bbf7d0;
+}
+
+.detail-btn.edit {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.detail-btn.edit:active {
+    background: #dbeafe;
+}
+
+.detail-btn.del {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.detail-btn.del:active {
+    background: #fee2e2;
+}

@@ -188,9 +188,9 @@
           }
         </div>
 
-        <!-- Vista de Tabla -->
+        <!-- Vista de Tabla (Escritorio) -->
         @if (viewMode === 'table') {
-        <div class="bills-table-container">
+        <div class="bills-table-container desktop-only">
           <table class="bills-table">
             <thead>
               @if ({ col: sortColumn | async, dir: sortDirection | async }; as sort) {
@@ -310,6 +310,31 @@
         </div>
         }
 
+        <!-- Vista Móvil: Lista de Tarjetas -->
+        @if (viewMode === 'table') {
+        <div class="mobile-bill-list">
+          @for (bill of (bills$ | async) || []; track bill.id) {
+          <div class="mobile-bill-card" [class.paid-card]="bill.status === 'paid'" (click)="openBillDetail(bill)">
+            <span class="cat-dot" [attr.data-category]="bill.category"></span>
+            <div class="mobile-bill-info">
+              <span class="mobile-bill-name">{{ bill.name }}</span>
+              <span class="mobile-bill-date">{{ bill.due_date | date:'dd/MM/yyyy' }}</span>
+            </div>
+            <div class="mobile-bill-right">
+              <span class="mobile-bill-amount">{{ bill.amount | currency:'ARS':'symbol-narrow':'1.0-0' }}</span>
+              <div class="days-pill" [ngClass]="getDaysClass(bill)">{{ getDaysText(bill) }}</div>
+            </div>
+            <span class="material-icons mobile-chevron">chevron_right</span>
+          </div>
+          } @empty {
+          <div class="mobile-empty">
+            <span class="material-icons">inbox</span>
+            <p>Sin facturas este mes</p>
+          </div>
+          }
+        </div>
+        }
+
         <!-- Vista de Calendario -->
         @if (viewMode === 'calendar') {
         <app-calendar [bills]="(bills$ | async) || []"></app-calendar>
@@ -370,3 +395,79 @@
     <span>Reportes</span>
   </a>
 </nav>
+
+<!-- Bill Detail Bottom Sheet (solo móvil) -->
+@if (billDetailSheet) {
+<div class="detail-overlay" (click)="closeBillDetail()">
+  <div class="detail-sheet" (click)="$event.stopPropagation()">
+    <div class="detail-sheet-handle"></div>
+    <div class="detail-header">
+      <div class="detail-title-row">
+        <span class="cat-dot large" [attr.data-category]="billDetailSheet.category"></span>
+        <h2>{{ billDetailSheet.name }}</h2>
+      </div>
+      <button class="detail-close" (click)="closeBillDetail()">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-row">
+        <span class="material-icons">payments</span>
+        <div>
+          <span class="detail-label">Monto</span>
+          <span class="detail-value amount-big">{{ billDetailSheet.amount | currency:'ARS':'symbol-narrow':'1.0-2'
+            }}</span>
+        </div>
+      </div>
+      <div class="detail-row">
+        <span class="material-icons">event</span>
+        <div>
+          <span class="detail-label">Vencimiento</span>
+          <span class="detail-value">{{ billDetailSheet.due_date | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+      <div class="detail-row">
+        <span class="material-icons">category</span>
+        <div>
+          <span class="detail-label">Categoría</span>
+          <span class="detail-value">{{ billDetailSheet.category }}</span>
+        </div>
+      </div>
+      <div class="detail-row">
+        <span class="material-icons">schedule</span>
+        <div>
+          <span class="detail-label">Estado</span>
+          <div class="days-pill" [ngClass]="getDaysClass(billDetailSheet)">{{ getDaysText(billDetailSheet) }}</div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <span class="material-icons">flag</span>
+        <div>
+          <span class="detail-label">Pago</span>
+          <span class="status-badge" [ngClass]="billDetailSheet.status">
+            {{ billDetailSheet.status === 'paid' ? 'Abonada' : 'Pendiente' }}
+          </span>
+        </div>
+      </div>
+      @if (billDetailSheet.is_provisional) {
+      <div class="detail-row provisional-row">
+        <span class="material-icons">help_outline</span>
+        <span>Monto provisorio</span>
+      </div>
+      }
+    </div>
+    <div class="detail-actions">
+      <button class="detail-btn pay" (click)="togglePayment(billDetailSheet.id); closeBillDetail()">
+        <span class="material-icons">{{ billDetailSheet.status === 'paid' ? 'undo' : 'check_circle' }}</span>
+        {{ billDetailSheet.status === 'paid' ? 'Desmarcar' : 'Pagada' }}
+      </button>
+      <button class="detail-btn edit" (click)="editBill(billDetailSheet)">
+        <span class="material-icons">edit</span> Editar
+      </button>
+      <button class="detail-btn del" (click)="deleteBill(billDetailSheet); closeBillDetail()">
+        <span class="material-icons">delete_outline</span> Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+}
