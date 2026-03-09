@@ -8,5 +8,7 @@ export const environment = {
         messagingSenderId: "675633401540",
         appId: "1:675633401540:web:085ca09a7cfb5cc3b54391",
         measurementId: "G-N57WKQSCJ6"
-    }
+    },
+    apiUrl: 'https://ceuntas-api-roberto.onrender.com/api/v1'
+
 };

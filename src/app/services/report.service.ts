@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth, user } from '@angular/fire/auth';
 import { Observable, switchMap, take, from, map, filter } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface ReportData {
     labels: string[];
@@ -16,7 +17,7 @@ export interface ReportData {
 export class ReportService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = 'http://localhost:8000/api/v1/reports';
+    private apiUrl = `${environment.apiUrl}/reports`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {

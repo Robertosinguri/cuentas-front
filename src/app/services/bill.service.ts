@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth, user, idToken } from '@angular/fire/auth';
 import { Observable, switchMap, take, from, of, map, filter } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Bill {
     id: string;
@@ -22,7 +23,7 @@ export interface Bill {
 export class BillService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = 'http://localhost:8000/api/v1/bills';
+    private apiUrl = `${environment.apiUrl}/bills`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {
