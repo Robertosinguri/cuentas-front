@@ -1,29 +1,18 @@
 <div class="dashboard-container">
+  <!-- Sidebar (escritorio) -->
   <aside class="sidebar">
     <div class="brand">
       <span class="material-icons">account_balance_wallet</span>
       <h2>Cuentas</h2>
     </div>
     <nav>
-      <a
-        href="javascript:void(0)"
-        [class.active]="viewMode === 'table'"
-        (click)="viewMode = 'table'"
-      >
+      <a href="javascript:void(0)" [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
         <span class="material-icons">dashboard</span> Resumen
       </a>
-      <a
-        href="javascript:void(0)"
-        [class.active]="viewMode === 'calendar'"
-        (click)="viewMode = 'calendar'"
-      >
+      <a href="javascript:void(0)" [class.active]="viewMode === 'calendar'" (click)="viewMode = 'calendar'">
         <span class="material-icons">calendar_month</span> Calendario
       </a>
-      <a
-        href="javascript:void(0)"
-        [class.active]="viewMode === 'reports'"
-        (click)="viewMode = 'reports'"
-      >
+      <a href="javascript:void(0)" [class.active]="viewMode === 'reports'" (click)="viewMode = 'reports'">
         <span class="material-icons">analytics</span> Reportes
       </a>
     </nav>
@@ -32,14 +21,14 @@
       <label>Mes</label>
       <select [ngModel]="selectedMonth | async" (ngModelChange)="changeMonth($event)">
         @for (m of monthNames; track m; let i = $index) {
-          <option [value]="i">{{ m }}</option>
+        <option [value]="i">{{ m }}</option>
         }
       </select>
 
       <label>Año</label>
       <select [ngModel]="selectedYear | async" (ngModelChange)="changeYear($event)">
         @for (y of years; track y) {
-          <option [value]="y">{{ y }}</option>
+        <option [value]="y">{{ y }}</option>
         }
       </select>
     </div>
@@ -51,315 +40,314 @@
   </aside>
 
   <main class="main-content">
+    <!-- Barra superior móvil con selectores de fecha -->
+    <div class="mobile-top-bar">
+      <div class="mobile-brand">
+        <span class="material-icons">account_balance_wallet</span>
+        <span>Cuentas</span>
+      </div>
+      <div class="mobile-date-selectors">
+        <select [ngModel]="selectedMonth | async" (ngModelChange)="changeMonth($event)">
+          @for (m of monthNames; track m; let i = $index) {
+          <option [value]="i">{{ m }}</option>
+          }
+        </select>
+        <select [ngModel]="selectedYear | async" (ngModelChange)="changeYear($event)">
+          @for (y of years; track y) {
+          <option [value]="y">{{ y }}</option>
+          }
+        </select>
+        <button class="mobile-add-btn" (click)="toggleModal()">
+          <span class="material-icons">add</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Top bar escritorio -->
     <header class="top-bar">
       <div class="search-box">
         <span class="material-icons">search</span>
         <input type="text" placeholder="Buscar facturas..." />
       </div>
       @if (user$ | async; as user) {
-        <div class="user-profile" (click)="toggleUserMenu()">
-          <div class="user-info">
-            <span class="user-name">{{ user.displayName }}</span>
-            <span class="material-icons">notifications</span>
-          </div>
-          <div class="avatar-container">
-            @if (user.photoURL) {
-              <img [src]="user.photoURL" [alt]="user.displayName" class="avatar-img" />
-            }
-            @if (!user.photoURL) {
-              <div class="avatar">{{ user.displayName?.charAt(0) }}</div>
-            }
-            <!-- Dropdown Menu -->
-            @if (showUserMenu) {
-              <div class="profile-dropdown">
-                <div class="dropdown-header">
-                  <p class="email">{{ user.email }}</p>
-                </div>
-                <button class="dropdown-item" (click)="logout()">
-                  <span class="material-icons">logout</span> Cerrar Sesión
-                </button>
-              </div>
-            }
-          </div>
+      <div class="user-profile" (click)="toggleUserMenu()">
+        <div class="user-info">
+          <span class="user-name">{{ user.displayName }}</span>
+          <span class="material-icons">notifications</span>
         </div>
+        <div class="avatar-container">
+          @if (user.photoURL) {
+          <img [src]="user.photoURL" [alt]="user.displayName" class="avatar-img" />
+          }
+          @if (!user.photoURL) {
+          <div class="avatar">{{ user.displayName?.charAt(0) }}</div>
+          }
+          <!-- Dropdown Menu -->
+          @if (showUserMenu) {
+          <div class="profile-dropdown">
+            <div class="dropdown-header">
+              <p class="email">{{ user.email }}</p>
+            </div>
+            <button class="dropdown-item" (click)="logout()">
+              <span class="material-icons">logout</span> Cerrar Sesión
+            </button>
+          </div>
+          }
+        </div>
+      </div>
       }
     </header>
 
     <div class="content-body">
       @if (summary$ | async; as stats) {
-        <section class="summary-cards">
-          <div
-            class="card mini-card info"
-            [class.active]="activeFilter === 'Todas'"
-            (click)="setFilter('Todas')"
-          >
-            <h3>Totales</h3>
-            <div class="card-values">
-              <p class="count">{{ stats.total }}</p>
-              <span class="total-money">{{
-                stats.totalAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
+      <section class="summary-cards">
+        <div class="card mini-card info" [class.active]="activeFilter === 'Todas'" (click)="setFilter('Todas')">
+          <h3>Totales</h3>
+          <div class="card-values">
+            <p class="count">{{ stats.total }}</p>
+            <span class="total-money">{{
+              stats.totalAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
               }}</span>
-            </div>
           </div>
-          <div
-            class="card mini-card danger"
-            [class.active]="activeFilter === 'Esta Semana'"
-            (click)="setFilter('Esta Semana')"
-          >
-            <h3>Esta Semana</h3>
-            <div class="card-values">
-              <p class="count">{{ stats.thisWeek }}</p>
-              <span class="total-money">{{
-                stats.thisWeekAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
+        </div>
+        <div class="card mini-card danger" [class.active]="activeFilter === 'Esta Semana'"
+          (click)="setFilter('Esta Semana')">
+          <h3>Esta Semana</h3>
+          <div class="card-values">
+            <p class="count">{{ stats.thisWeek }}</p>
+            <span class="total-money">{{
+              stats.thisWeekAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
               }}</span>
-            </div>
           </div>
-          <div
-            class="card mini-card next-week"
-            [class.active]="activeFilter === 'Prox. Semana'"
-            (click)="setFilter('Prox. Semana')"
-          >
-            <h3>Prox. Semana</h3>
-            <div class="card-values">
-              <p class="count">{{ stats.nextWeek }}</p>
-              <span class="total-money">{{
-                stats.nextWeekAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
+        </div>
+        <div class="card mini-card next-week" [class.active]="activeFilter === 'Prox. Semana'"
+          (click)="setFilter('Prox. Semana')">
+          <h3>Prox. Semana</h3>
+          <div class="card-values">
+            <p class="count">{{ stats.nextWeek }}</p>
+            <span class="total-money">{{
+              stats.nextWeekAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
               }}</span>
-            </div>
           </div>
-          <div
-            class="card mini-card success"
-            [class.active]="activeFilter === 'Abonadas'"
-            (click)="setFilter('Abonadas')"
-          >
-            <h3>Abonadas</h3>
-            <div class="card-values">
-              <p class="count">{{ stats.paid }}</p>
-              <span class="total-money">{{
-                stats.paidAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
+        </div>
+        <div class="card mini-card success" [class.active]="activeFilter === 'Abonadas'"
+          (click)="setFilter('Abonadas')">
+          <h3>Abonadas</h3>
+          <div class="card-values">
+            <p class="count">{{ stats.paid }}</p>
+            <span class="total-money">{{
+              stats.paidAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
               }}</span>
-            </div>
           </div>
-          <div
-            class="card mini-card warning"
-            [class.active]="activeFilter === 'Por Abonar'"
-            (click)="setFilter('Por Abonar')"
-          >
-            <h3>Por Abonar</h3>
-            <div class="card-values">
-              <p class="count">{{ stats.pending }}</p>
-              <span class="total-money">{{
-                stats.pendingAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
+        </div>
+        <div class="card mini-card warning" [class.active]="activeFilter === 'Por Abonar'"
+          (click)="setFilter('Por Abonar')">
+          <h3>Por Abonar</h3>
+          <div class="card-values">
+            <p class="count">{{ stats.pending }}</p>
+            <span class="total-money">{{
+              stats.pendingAmount | currency: 'ARS' : 'symbol-narrow' : '1.0-0'
               }}</span>
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
       }
 
       <section class="bills-section">
         <div class="section-header">
           @if (viewMode === 'table') {
-            <div class="filters">
-              <button
-                class="filter-btn"
-                [class.active]="activeFilter === 'Todas'"
-                (click)="setFilter('Todas')"
-              >
-                Todas
-              </button>
-              @for (cat of categories; track cat) {
-                <button
-                  class="filter-btn"
-                  [class.active]="activeFilter === cat"
-                  (click)="setFilter(cat)"
-                >
-                  {{ cat }}
-                </button>
-              }
-            </div>
+          <div class="filters">
+            <button class="filter-btn" [class.active]="activeFilter === 'Todas'" (click)="setFilter('Todas')">
+              Todas
+            </button>
+            @for (cat of categories; track cat) {
+            <button class="filter-btn" [class.active]="activeFilter === cat" (click)="setFilter(cat)">
+              {{ cat }}
+            </button>
+            }
+          </div>
           }
         </div>
 
         <!-- Vista de Tabla -->
         @if (viewMode === 'table') {
-          <div class="bills-table-container">
-            <table class="bills-table">
-              <thead>
-                @if ({ col: sortColumn | async, dir: sortDirection | async }; as sort) {
-                  <tr>
-                    <th (click)="toggleSort('service')" class="sortable">
-                      <div class="th-content">
-                        Servicio
-                        @if (sort.col === 'service') {
-                          <span class="material-icons sort-icon">
-                            {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
-                          </span>
-                        }
-                      </div>
-                    </th>
-                    <th (click)="toggleSort('amount')" class="sortable">
-                      <div class="th-content">
-                        Monto
-                        @if (sort.col === 'amount') {
-                          <span class="material-icons sort-icon">
-                            {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
-                          </span>
-                        }
-                      </div>
-                    </th>
-                    <th (click)="toggleSort('due_date')" class="sortable">
-                      <div class="th-content">
-                        Vencimiento
-                        @if (sort.col === 'due_date') {
-                          <span class="material-icons sort-icon">
-                            {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
-                          </span>
-                        }
-                      </div>
-                    </th>
-                    <th (click)="toggleSort('days')" class="sortable">
-                      <div class="th-content">
-                        Días Restantes
-                        @if (sort.col === 'days') {
-                          <span class="material-icons sort-icon">
-                            {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
-                          </span>
-                        }
-                      </div>
-                    </th>
-                    <th (click)="toggleSort('status')" class="sortable">
-                      <div class="th-content">
-                        Estado
-                        @if (sort.col === 'status') {
-                          <span class="material-icons sort-icon">
-                            {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
-                          </span>
-                        }
-                      </div>
-                    </th>
-                    <th>Acciones</th>
-                  </tr>
-                }
-              </thead>
-              <tbody>
-                @for (bill of bills$ | async; track bill) {
-                  <tr [class.paid]="bill.status === 'paid'">
-                    <td>
-                      <div class="service-name">
-                        <span class="cat-dot" [attr.data-category]="bill.category"></span>
-                        <div class="provisional-container">
-                          @if (bill.is_provisional && bill.status !== 'paid') {
-                            <span class="provisional-hint" title="Monto provisorio">
-                              <span class="material-icons">help_outline</span>
-                            </span>
-                          }
-                        </div>
-                        <span class="name-text">{{ bill.name }}</span>
-                      </div>
-                    </td>
-                    <td class="amount">
-                      {{ bill.amount | currency: 'ARS' : 'symbol-narrow' }}
-                    </td>
-                    <td>{{ bill.due_date | date: 'dd/MM/yyyy' }}</td>
-                    <td>
-                      <div class="days-pill" [ngClass]="getDaysClass(bill)">
-                        {{ getDaysText(bill) }}
-                      </div>
-                    </td>
-                    <td>
-                      <span class="status-badge" [ngClass]="bill.status">
-                        {{ bill.status === 'paid' ? 'Abonada' : 'Pendiente' }}
+        <div class="bills-table-container">
+          <table class="bills-table">
+            <thead>
+              @if ({ col: sortColumn | async, dir: sortDirection | async }; as sort) {
+              <tr>
+                <th (click)="toggleSort('service')" class="sortable">
+                  <div class="th-content">
+                    Servicio
+                    @if (sort.col === 'service') {
+                    <span class="material-icons sort-icon">
+                      {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
+                    </span>
+                    }
+                  </div>
+                </th>
+                <th (click)="toggleSort('amount')" class="sortable">
+                  <div class="th-content">
+                    Monto
+                    @if (sort.col === 'amount') {
+                    <span class="material-icons sort-icon">
+                      {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
+                    </span>
+                    }
+                  </div>
+                </th>
+                <th (click)="toggleSort('due_date')" class="sortable">
+                  <div class="th-content">
+                    Vencimiento
+                    @if (sort.col === 'due_date') {
+                    <span class="material-icons sort-icon">
+                      {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
+                    </span>
+                    }
+                  </div>
+                </th>
+                <th (click)="toggleSort('days')" class="sortable">
+                  <div class="th-content">
+                    Días Restantes
+                    @if (sort.col === 'days') {
+                    <span class="material-icons sort-icon">
+                      {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
+                    </span>
+                    }
+                  </div>
+                </th>
+                <th (click)="toggleSort('status')" class="sortable">
+                  <div class="th-content">
+                    Estado
+                    @if (sort.col === 'status') {
+                    <span class="material-icons sort-icon">
+                      {{ sort.dir === 'asc' ? 'expand_less' : 'expand_more' }}
+                    </span>
+                    }
+                  </div>
+                </th>
+                <th>Acciones</th>
+              </tr>
+              }
+            </thead>
+            <tbody>
+              @for (bill of bills$ | async; track bill) {
+              <tr [class.paid]="bill.status === 'paid'">
+                <td>
+                  <div class="service-name">
+                    <span class="cat-dot" [attr.data-category]="bill.category"></span>
+                    <div class="provisional-container">
+                      @if (bill.is_provisional && bill.status !== 'paid') {
+                      <span class="provisional-hint" title="Monto provisorio">
+                        <span class="material-icons">help_outline</span>
                       </span>
-                    </td>
-                    <td>
-                      <button
-                        (click)="togglePayment(bill.id)"
-                        class="action-btn pay"
-                        [title]="
+                      }
+                    </div>
+                    <span class="name-text">{{ bill.name }}</span>
+                  </div>
+                </td>
+                <td class="amount">
+                  {{ bill.amount | currency: 'ARS' : 'symbol-narrow' }}
+                </td>
+                <td>{{ bill.due_date | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                  <div class="days-pill" [ngClass]="getDaysClass(bill)">
+                    {{ getDaysText(bill) }}
+                  </div>
+                </td>
+                <td>
+                  <span class="status-badge" [ngClass]="bill.status">
+                    {{ bill.status === 'paid' ? 'Abonada' : 'Pendiente' }}
+                  </span>
+                </td>
+                <td>
+                  <button (click)="togglePayment(bill.id)" class="action-btn pay" [title]="
                           bill.status === 'paid' ? 'Desmarcar como abonada' : 'Marcar como abonada'
-                        "
-                      >
-                        <span class="material-icons">{{
-                          bill.status === 'paid' ? 'undo' : 'check_circle'
-                        }}</span>
-                      </button>
-                      <button
-                        (click)="toggleProvisional(bill)"
-                        class="action-btn prov"
-                        [title]="
+                        ">
+                    <span class="material-icons">{{
+                      bill.status === 'paid' ? 'undo' : 'check_circle'
+                      }}</span>
+                  </button>
+                  <button (click)="toggleProvisional(bill)" class="action-btn prov" [title]="
                           bill.is_provisional
                             ? 'Marcar como monto real'
                             : 'Marcar como monto provisorio'
-                        "
-                      >
-                        <span class="material-icons">{{
-                          bill.is_provisional ? 'help' : 'help_outline'
-                        }}</span>
-                      </button>
-                      <button (click)="editBill(bill)" class="action-btn" title="Editar factura">
-                        <span class="material-icons">edit</span>
-                      </button>
-                      <button
-                        (click)="deleteBill(bill)"
-                        class="action-btn delete"
-                        title="Eliminar factura"
-                      >
-                        <span class="material-icons">delete_outline</span>
-                      </button>
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+                        ">
+                    <span class="material-icons">{{
+                      bill.is_provisional ? 'help' : 'help_outline'
+                      }}</span>
+                  </button>
+                  <button (click)="editBill(bill)" class="action-btn" title="Editar factura">
+                    <span class="material-icons">edit</span>
+                  </button>
+                  <button (click)="deleteBill(bill)" class="action-btn delete" title="Eliminar factura">
+                    <span class="material-icons">delete_outline</span>
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
         }
 
         <!-- Vista de Calendario -->
         @if (viewMode === 'calendar') {
-          <app-calendar [bills]="(bills$ | async) || []"></app-calendar>
+        <app-calendar [bills]="(bills$ | async) || []"></app-calendar>
         }
 
         <!-- Vista de Reportes -->
         @if (viewMode === 'reports') {
-          <app-reports></app-reports>
+        <app-reports></app-reports>
         }
       </section>
     </div>
   </main>
 
   @if (showModal) {
-    <app-bill-form
-      [billToEdit]="selectedBill"
-      [defaultMonth]="(selectedMonth | async) ?? null"
-      [defaultYear]="(selectedYear | async) ?? null"
-      (billCreated)="refresh()"
-      (close)="toggleModal()"
-    >
-    </app-bill-form>
+  <app-bill-form [billToEdit]="selectedBill" [defaultMonth]="(selectedMonth | async) ?? null"
+    [defaultYear]="(selectedYear | async) ?? null" (billCreated)="refresh()" (close)="toggleModal()">
+  </app-bill-form>
   }
 
   <!-- Modal de Confirmación de Borrado -->
   @if (showDeleteConfirm) {
-    <div class="modal">
-      <div class="modal-content delete-confirm-modal">
-        <div class="modal-header danger">
-          <span class="material-icons">warning</span>
-          <h2>Eliminar Cuenta</h2>
-        </div>
-        <div class="modal-body">
-          <p>
-            ¿Estás seguro de que quieres eliminar <strong>"{{ billToDelete?.name }}"</strong>?
-          </p>
-          <p class="warning-text">
-            <span class="material-icons">info</span>
-            También se eliminará del calendario de Google.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn-cancel" (click)="showDeleteConfirm = false">Cancelar</button>
-          <button class="btn-delete-confirm" (click)="confirmDelete()">Eliminar</button>
-        </div>
+  <div class="modal">
+    <div class="modal-content delete-confirm-modal">
+      <div class="modal-header danger">
+        <span class="material-icons">warning</span>
+        <h2>Eliminar Cuenta</h2>
+      </div>
+      <div class="modal-body">
+        <p>
+          ¿Estás seguro de que quieres eliminar <strong>"{{ billToDelete?.name }}"</strong>?
+        </p>
+        <p class="warning-text">
+          <span class="material-icons">info</span>
+          También se eliminará del calendario de Google.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="showDeleteConfirm = false">Cancelar</button>
+        <button class="btn-delete-confirm" (click)="confirmDelete()">Eliminar</button>
       </div>
     </div>
+  </div>
   }
 </div>
+
+<!-- Navegación inferior móvil -->
+<nav class="mobile-bottom-nav">
+  <a href="javascript:void(0)" [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+    <span class="material-icons">dashboard</span>
+    <span>Resumen</span>
+  </a>
+  <a href="javascript:void(0)" [class.active]="viewMode === 'calendar'" (click)="viewMode = 'calendar'">
+    <span class="material-icons">calendar_month</span>
+    <span>Calendario</span>
+  </a>
+  <a href="javascript:void(0)" [class.active]="viewMode === 'reports'" (click)="viewMode = 'reports'">
+    <span class="material-icons">analytics</span>
+    <span>Reportes</span>
+  </a>
+</nav>

@@ -720,3 +720,240 @@ nav a:hover {
     background: #e2e8f0;
     color: #1e293b;
 }
+
+/* ===================================================
+   RESPONSIVE: Mobile-First Design
+   =================================================== */
+
+/* Ocultar barra móvil y nav inferior en escritorio */
+.mobile-top-bar,
+.mobile-bottom-nav {
+    display: none;
+}
+
+/* --- Tablet y Mobile (≤ 768px) --- */
+@media (max-width: 768px) {
+
+    /* Ocultar sidebar y top-bar de escritorio */
+    .sidebar,
+    .top-bar {
+        display: none !important;
+    }
+
+    /* Mostrar controles móviles */
+    .mobile-top-bar,
+    .mobile-bottom-nav {
+        display: flex;
+    }
+
+    /* Layout principal sin sidebar */
+    .dashboard-container {
+        flex-direction: column;
+        height: 100dvh;
+        /* dynamic viewport height para móviles */
+    }
+
+    .main-content {
+        overflow-y: auto;
+        height: calc(100dvh - 56px - 60px);
+        /* top bar + bottom nav */
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Barra superior móvil */
+    .mobile-top-bar {
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 0.6rem 1rem;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        height: 56px;
+    }
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: #1e3a8a;
+        white-space: nowrap;
+    }
+
+    .mobile-brand .material-icons {
+        font-size: 1.4rem;
+    }
+
+    .mobile-date-selectors {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .mobile-date-selectors select {
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.6rem;
+        padding: 0.35rem 0.4rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #1e293b;
+        font-family: inherit;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .mobile-add-btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+        flex-shrink: 0;
+    }
+
+    .mobile-add-btn .material-icons {
+        font-size: 1.3rem;
+    }
+
+    /* Nav inferior */
+    .mobile-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 300;
+        height: 60px;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .mobile-bottom-nav a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 0.65rem;
+        font-weight: 600;
+        transition: color 0.2s;
+        padding: 0.5rem 0;
+    }
+
+    .mobile-bottom-nav a .material-icons {
+        font-size: 1.4rem;
+    }
+
+    .mobile-bottom-nav a.active {
+        color: #2563eb;
+    }
+
+    .mobile-bottom-nav a.active .material-icons {
+        transform: scale(1.1);
+    }
+
+    /* Ajustar content body para mobile */
+    .content-body {
+        padding: 0.75rem;
+    }
+
+    /* Summary cards en 2 columnas en mobile */
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+
+    /* La primera card ocupa ancho completo */
+    .summary-cards .mini-card:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .mini-card {
+        padding: 0.75rem 1rem;
+    }
+
+    .mini-card .count {
+        font-size: 1.4rem;
+    }
+
+    /* Tabla Horizontal Scrollable en mobile */
+    .bills-table-container {
+        border-radius: 1rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .bills-table {
+        min-width: 520px;
+        /* Forzar scroll horizontal si hace falta */
+    }
+
+    .bills-table th,
+    .bills-table td {
+        padding: 0.9rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    /* Ocultar columna menos importante en pantallas muy chicas */
+    .bills-table th:nth-child(4),
+    .bills-table td:nth-child(4) {
+        display: none;
+    }
+
+    /* Filtros con scroll horizontal */
+    .filters {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.2rem;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    .filter-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+        flex: none;
+        padding: 0.5rem 0.75rem;
+    }
+
+    /* Modal ocupa pantalla completa en mobile */
+    .modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .delete-confirm-modal {
+        border-radius: 2rem 2rem 0 0;
+        max-width: 100% !important;
+        width: 100%;
+    }
+}
+
+/* --- Pantallas muy pequeñas (≤ 380px) --- */
+@media (max-width: 380px) {
+    .mobile-brand span:last-child {
+        display: none;
+        /* Solo visible el icono en pantallas muy chiquitas */
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+}
