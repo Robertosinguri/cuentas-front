@@ -42,44 +42,59 @@
   <main class="main-content">
     <!-- Barra superior móvil con selectores de fecha -->
     <div class="mobile-top-bar">
-      <div class="mobile-brand">
-        <span class="material-icons">account_balance_wallet</span>
-        <span>Cuentas</span>
-      </div>
-      <div class="mobile-date-selectors">
-        <select [ngModel]="selectedMonth | async" (ngModelChange)="changeMonth($event)">
-          @for (m of monthNames; track m; let i = $index) {
-          <option [value]="i">{{ m }}</option>
-          }
-        </select>
-        <select [ngModel]="selectedYear | async" (ngModelChange)="changeYear($event)">
-          @for (y of years; track y) {
-          <option [value]="y">{{ y }}</option>
-          }
-        </select>
-        <button class="mobile-add-btn" (click)="toggleModal()">
-          <span class="material-icons">add</span>
-        </button>
-        @if (user$ | async; as user) {
-        <div class="mobile-avatar-wrap" (click)="toggleUserMenu()">
-          @if (user.photoURL) {
-          <img [src]="user.photoURL" [alt]="user.displayName" class="avatar-img" />
-          } @else {
-          <div class="avatar">{{ user.displayName?.charAt(0) }}</div>
-          }
-          @if (showUserMenu) {
-          <div class="profile-dropdown">
-            <div class="dropdown-header">
-              <p class="email">{{ user.email }}</p>
+      <!-- Fila 1: Marca + Controles -->
+      <div class="mobile-top-row">
+        <div class="mobile-brand">
+          <span class="material-icons">account_balance_wallet</span>
+          <span>Cuentas</span>
+        </div>
+        <div class="mobile-date-selectors">
+          <select [ngModel]="selectedMonth | async" (ngModelChange)="changeMonth($event)">
+            @for (m of monthNames; track m; let i = $index) {
+            <option [value]="i">{{ m }}</option>
+            }
+          </select>
+          <select [ngModel]="selectedYear | async" (ngModelChange)="changeYear($event)">
+            @for (y of years; track y) {
+            <option [value]="y">{{ y }}</option>
+            }
+          </select>
+          <button class="mobile-add-btn" (click)="toggleModal()">
+            <span class="material-icons">add</span>
+          </button>
+          @if (user$ | async; as user) {
+          <div class="mobile-avatar-wrap" (click)="toggleUserMenu()">
+            @if (user.photoURL) {
+            <img [src]="user.photoURL" [alt]="user.displayName" class="avatar-img" />
+            } @else {
+            <div class="avatar">{{ user.displayName?.charAt(0) }}</div>
+            }
+            @if (showUserMenu) {
+            <div class="profile-dropdown">
+              <div class="dropdown-header">
+                <p class="email">{{ user.email }}</p>
+              </div>
+              <button class="dropdown-item" (click)="logout()">
+                <span class="material-icons">logout</span> Cerrar Sesión
+              </button>
             </div>
-            <button class="dropdown-item" (click)="logout()">
-              <span class="material-icons">logout</span> Cerrar Sesión
-            </button>
+            }
           </div>
           }
         </div>
-        }
       </div>
+      <!-- Fila 2: Navegación de vistas -->
+      <nav class="mobile-view-nav">
+        <a href="javascript:void(0)" [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <span class="material-icons">dashboard</span> Resumen
+        </a>
+        <a href="javascript:void(0)" [class.active]="viewMode === 'calendar'" (click)="viewMode = 'calendar'">
+          <span class="material-icons">calendar_month</span> Calendario
+        </a>
+        <a href="javascript:void(0)" [class.active]="viewMode === 'reports'" (click)="viewMode = 'reports'">
+          <span class="material-icons">analytics</span> Reportes
+        </a>
+      </nav>
     </div>
 
     <!-- Top bar escritorio -->

@@ -755,23 +755,30 @@ nav a:hover {
 
     .main-content {
         overflow-y: auto;
-        height: calc(100dvh - 56px - 60px);
-        /* top bar + bottom nav */
-        padding-bottom: env(safe-area-inset-bottom);
+        height: calc(100dvh - 104px);
+        /* altura de la nueva top bar (2 filas) */
+        padding-bottom: 0;
     }
 
-    /* Barra superior móvil */
+    /* Barra superior móvil — ahora con 2 filas */
     .mobile-top-bar {
         position: sticky;
         top: 0;
         z-index: 200;
         background: white;
         border-bottom: 1px solid #e2e8f0;
-        padding: 0.6rem 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Fila 1: marca + controles */
+    .mobile-top-row {
+        display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 0.6rem 1rem;
         gap: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         height: 56px;
     }
 
@@ -827,56 +834,40 @@ nav a:hover {
         font-size: 1.3rem;
     }
 
-    /* Nav inferior */
-    .mobile-bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 300;
-        height: 64px;
-        background: white;
-        border-top: 1px solid #e2e8f0;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
-        padding-bottom: env(safe-area-inset-bottom);
+    /* Fila 2: Navegación de vistas */
+    .mobile-view-nav {
+        display: flex;
+        border-top: 1px solid #f1f5f9;
     }
 
-    .mobile-bottom-nav a {
+    .mobile-view-nav a {
         flex: 1;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 0.15rem;
+        gap: 0.3rem;
+        padding: 0.5rem 0.25rem;
         text-decoration: none;
-        color: #94a3b8;
-        font-size: 0.62rem;
+        color: #64748b;
+        font-size: 0.78rem;
         font-weight: 600;
-        transition: color 0.2s;
-        padding: 0.4rem 0.25rem;
-        min-width: 0;
-        /* permite que el texto se contraiga */
-        overflow: hidden;
-    }
-
-    .mobile-bottom-nav a span:last-child {
+        border-bottom: 2px solid transparent;
+        transition: color 0.2s, border-color 0.2s;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100%;
     }
 
-    .mobile-bottom-nav a .material-icons {
-        font-size: 1.4rem;
-        flex-shrink: 0;
+    .mobile-view-nav a .material-icons {
+        font-size: 1.1rem;
     }
 
-    .mobile-bottom-nav a.active {
+    .mobile-view-nav a.active {
         color: #2563eb;
+        border-bottom-color: #2563eb;
     }
 
-    .mobile-bottom-nav a.active .material-icons {
-        transform: scale(1.1);
+    /* Ocultar la nav inferior ya que ahora está arriba */
+    .mobile-bottom-nav {
+        display: none !important;
     }
 
     /* Avatar móvil */
@@ -950,20 +941,33 @@ nav a:hover {
         display: none;
     }
 
-    /* Filtros con scroll horizontal */
+    /* Filtros: se adaptan en grilla flexible que wrappea */
     .filters {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 0.2rem;
-        flex-wrap: nowrap;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding: 0;
+        background: transparent;
+        border: none;
         width: 100%;
     }
 
     .filter-btn {
         white-space: nowrap;
-        flex-shrink: 0;
-        flex: none;
-        padding: 0.5rem 0.75rem;
+        flex: 0 1 auto;
+        padding: 0.45rem 0.75rem;
+        font-size: 0.8rem;
+        border-radius: 2rem;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+    }
+
+    .filter-btn.active {
+        background: #eff6ff;
+        color: #2563eb;
+        border-color: #bfdbfe;
+        box-shadow: none;
+        transform: none;
     }
 
     /* Modal ocupa pantalla completa en mobile */
