@@ -60,6 +60,25 @@
         <button class="mobile-add-btn" (click)="toggleModal()">
           <span class="material-icons">add</span>
         </button>
+        @if (user$ | async; as user) {
+        <div class="mobile-avatar-wrap" (click)="toggleUserMenu()">
+          @if (user.photoURL) {
+          <img [src]="user.photoURL" [alt]="user.displayName" class="avatar-img" />
+          } @else {
+          <div class="avatar">{{ user.displayName?.charAt(0) }}</div>
+          }
+          @if (showUserMenu) {
+          <div class="profile-dropdown">
+            <div class="dropdown-header">
+              <p class="email">{{ user.email }}</p>
+            </div>
+            <button class="dropdown-item" (click)="logout()">
+              <span class="material-icons">logout</span> Cerrar Sesión
+            </button>
+          </div>
+          }
+        </div>
+        }
       </div>
     </div>
 
