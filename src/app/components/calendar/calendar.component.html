@@ -1,0 +1,52 @@
+<div class="calendar-card">
+  <div class="calendar-header">
+    <div class="month-label">
+      <h2>
+        {{ monthNames[viewDate.getMonth()] }} <span>{{ viewDate.getFullYear() }}</span>
+      </h2>
+    </div>
+    <div class="calendar-controls">
+      <button (click)="prevMonth()" class="ctrl-btn">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <button (click)="nextMonth()" class="ctrl-btn">
+        <span class="material-icons">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-grid">
+    @for (day of weekDays; track day; let i = $index) {
+      <div class="weekday-header" [class.weekend]="i === 0 || i === 6">{{ day }}</div>
+    }
+
+    @for (day of days; track day) {
+      <div
+        class="calendar-day"
+        [class.weekend]="day.isWeekend"
+        [class.other-month]="!day.isCurrentMonth"
+        [class.today]="day.isToday"
+      >
+        <span class="day-number">{{ day.date.getDate() }}</span>
+        <div class="day-bills">
+          @for (bill of day.bills; track bill) {
+            <div
+              class="bill-dot"
+              [ngClass]="getBillClass(bill)"
+              [title]="bill.name + ': ' + (bill.amount | currency: 'ARS')"
+            >
+              <span class="bill-name">{{ bill.name }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="calendar-legend">
+    <div class="legend-item"><span class="dot paid"></span> Pagado</div>
+    <div class="legend-item"><span class="dot urgent"></span> Urgente</div>
+    <div class="legend-item"><span class="dot pending"></span> Pendiente</div>
+    <div class="legend-item"><span class="dot overdue"></span> Vencido</div>
+  </div>
+</div>

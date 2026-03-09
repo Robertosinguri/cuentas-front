@@ -1,0 +1,69 @@
+<div class="modal-overlay" (click)="close.emit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>{{ billToEdit ? 'Editar Factura' : 'Nueva Factura' }}</h2>
+            <button class="close-btn" (click)="close.emit()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+
+        <form [formGroup]="billForm" (ngSubmit)="onSubmit()" class="bill-form">
+            <div class="form-group">
+                <label for="name">Servicio / Nombre</label>
+                <div class="input-wrapper">
+                    <span class="material-icons">label</span>
+                    <input type="text" id="name" formControlName="name" placeholder="Ej: Edesur, Metrogas...">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="amount">Monto a Pagar</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons">payments</span>
+                        <input type="number" id="amount" formControlName="amount" placeholder="0.00">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="due_date">Fecha de Vencimiento</label>
+                    <div class="input-wrapper">
+                        <span class="material-icons">calendar_today</span>
+                        <input type="date" id="due_date" formControlName="due_date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Categoría</label>
+                <div class="input-wrapper">
+                    <span class="material-icons">category</span>
+                    <select id="category" formControlName="category">
+                        <option value="Hogar">Hogar</option>
+                        <option value="Comunicaciones">Comunicaciones</option>
+                        <option value="Vehículo">Vehículo</option>
+                        <option value="Tributario">Tributario</option>
+                        <option value="Créditos">Créditos</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" formControlName="is_provisional">
+                    <span class="checkmark"></span>
+                    Monto Provisorio (A la espera de datos reales)
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-cancel" (click)="close.emit()">Cancelar</button>
+                <button type="submit" class="btn btn-save" [disabled]="billForm.invalid">
+                    <span class="material-icons">save</span>
+                    Guardar Factura
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

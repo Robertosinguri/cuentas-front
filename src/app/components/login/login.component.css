@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%);
+  font-family: 'Outfit', 'Inter', sans-serif;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  height: 100vh;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2.5rem;
+  padding: 4rem 3rem;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.logo-area {
+  margin-bottom: 3.5rem;
+}
+
+.logo-circle {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 50%;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+  color: white;
+}
+
+.logo-circle span { font-size: 3rem; }
+
+h1 {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.05rem;
+}
+
+p {
+  color: #94a3b8;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.login-actions {
+  margin-top: 2rem;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  padding: 1.25rem;
+  background: white;
+  border: none;
+  border-radius: 1.25rem;
+  color: #1e293b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+  background: #f8fafc;
+}
+
+.btn-google img { height: 24px; }
+
+.terms {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.user-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 4px solid #3b82f6;
+  margin-bottom: 1.5rem;
+}
+
+.user-info h2 {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

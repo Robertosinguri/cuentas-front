@@ -1,0 +1,120 @@
+.reports-container {
+    padding: 1.5rem;
+    color: #f3f4f6;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #f3f4f6;
+}
+
+.header p {
+    color: #9ca3af;
+    margin-top: 0.5rem;
+}
+
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: #9ca3af;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background: #1f2937;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 350px;
+    border: 1px solid #374151;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Cumulative Table Styles */
+.table-card {
+    min-height: auto;
+    padding: 1.5rem 2rem;
+}
+
+.table-title {
+    color: #f3f4f6;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.cumulative-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #e5e7eb;
+}
+
+.cumulative-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid #374151;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.cumulative-table th:last-child,
+.cumulative-table td:last-child {
+    text-align: right;
+}
+
+.cumulative-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #374151;
+}
+
+.cumulative-table tr:hover:not(.hidden-row) {
+    background-color: #37415140;
+    /* Hover state for rows */
+}
+
+.cumulative-table .amount {
+    font-family: monospace;
+    font-size: 1.05rem;
+}
+
+.cumulative-table .cumulative {
+    color: #4ade80;
+    /* Highlight cumulative with solid green */
+    font-weight: bold;
+}
+
+.hidden-row {
+    display: none;
+}

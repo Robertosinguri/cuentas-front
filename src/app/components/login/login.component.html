@@ -1,0 +1,30 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo-area">
+      <div class="logo-circle">
+        <span class="material-icons">account_balance_wallet</span>
+      </div>
+      <h1>Cuentas Personales</h1>
+      <p>Gestiona tus pagos con orden y tranquilidad</p>
+    </div>
+
+    <div class="login-actions">
+      @if (user$ | async; as user) {
+        <div class="user-info">
+          <img [src]="user.photoURL" [alt]="user.displayName" />
+          <h2>Hola, {{ user.displayName }}</h2>
+          <button (click)="logout()" class="btn btn-secondary">Cerrar sesión</button>
+        </div>
+      } @else {
+        <button (click)="loginWithGoogle()" class="btn btn-google">
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google Logo"
+          />
+          <span>Ingresar con Google</span>
+        </button>
+        <p class="terms">Al ingresar, aceptas nuestra política de privacidad y términos de uso.</p>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+
+> cuentas-front@0.0.0 build
+> ng build
+
+Node.js version v25.2.1 detected.
+Odd numbered Node.js versions will not enter LTS status and should not be used for production. For more information, please see https://nodejs.org/en/about/previous-releases/.
+[33m❯[39m Building...
+[32m✔[39m Building...
+[1mInitial chunk files[22m  [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m[2m | [22m[1mEstimated transfer size[22m
+[32mmain-36SKGD57.js[39m     [2m | [22m[2mmain[22m         [2m | [22m[36m748.20 kB[39m[2m | [22m              [36m186.90 kB[39m
+[32mpolyfills-DOYHMSTV.js[39m[2m | [22m[2mpolyfills[22m    [2m | [22m [36m35.73 kB[39m[2m | [22m               [36m11.58 kB[39m
+[32mstyles-5INURTSO.css[39m  [2m | [22m[2mstyles[22m       [2m | [22m  [36m0 bytes[39m[2m | [22m                [36m0 bytes[39m
+
+[1m [22m                    [2m | [22m[1mInitial total[22m[2m | [22m[1m[93m783.93 kB[39m[22m[2m | [22m              [1m198.48 kB[22m
+
+Application bundle generation failed. [5.101 seconds] - 2026-03-09T15:57:14.253Z
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mbundle initial exceeded maximum budget. Budget 500.00 kB was not met by 283.93 kB with a total of 783.93 kB.[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1msrc/app/components/dashboard/dashboard.component.css exceeded maximum budget. Budget 4.00 kB was not met by 4.98 kB with a total of 8.98 kB.[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1msrc/app/components/dashboard/dashboard.component.css exceeded maximum budget. Budget 8.00 kB was not met by 983 bytes with a total of 8.98 kB.[0m
+
+[39m[22m

@@ -1,0 +1,220 @@
+.calendar-card {
+    background: white;
+    border-radius: 1.5rem;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.month-label h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+.month-label h2 span {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.calendar-controls {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ctrl-btn {
+    background: #f1f5f9;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.ctrl-btn:hover {
+    background: #e2e8f0;
+    color: #2563eb;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: #f1f5f9;
+    border: 1px solid #f1f5f9;
+}
+
+.weekday-header {
+    background: #f8fafc;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.weekday-header.weekend {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.calendar-day {
+    background: white;
+    min-height: 100px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.calendar-day.weekend {
+    background: #f8fafc;
+}
+
+.calendar-day.other-month {
+    background: #fbfcff;
+}
+
+.calendar-day.other-month.weekend {
+    background: #f1f5f9;
+}
+
+.calendar-day.other-month .day-number {
+    color: #cbd5e1;
+}
+
+.day-number {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.calendar-day.today {
+    background: #f0f7ff;
+}
+
+.calendar-day.today .day-number {
+    color: #2563eb;
+    background: #dbeafe;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.day-bills {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bill-dot {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: help;
+}
+
+.bill-name {
+    display: block;
+}
+
+.bill-pending {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 3px solid #ef4444;
+}
+
+.bill-urgent {
+    background: #fef3c7;
+    color: #b45309;
+    border-left: 3px solid #f59e0b;
+}
+
+.bill-paid {
+    background: #dcfce7;
+    color: #15803d;
+    border-left: 3px solid #10b981;
+}
+
+.bill-overdue {
+    background: #ef4444;
+    color: white;
+    border-left: 3px solid #b91c1c;
+    animation: pulse-calendar 2s infinite;
+}
+
+@keyframes pulse-calendar {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.calendar-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dot.paid {
+    background: #10b981;
+}
+
+.dot.urgent {
+    background: #f59e0b;
+}
+
+.dot.pending {
+    background: #ef4444;
+}
+
+.dot.overdue {
+    background: #b91c1c;
+}

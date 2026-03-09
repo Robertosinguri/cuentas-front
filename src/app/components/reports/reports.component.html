@@ -1,0 +1,56 @@
+<div class="reports-container">
+  <div class="header">
+    <h2>Análisis de Gastos</h2>
+    <p>Visualiza el progreso de tus cuentas a lo largo del año.</p>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <span class="material-icons spin">refresh</span>
+      <p>Cargando reportes...</p>
+    </div>
+  }
+
+  <div [hidden]="loading" class="charts-grid">
+    <!-- 1. Evolución por Factura -->
+    <div class="chart-card">
+      <canvas #linesChart></canvas>
+    </div>
+
+    <!-- 2. Gasto Mensual Total -->
+    <div class="chart-card">
+      <canvas #annualChart></canvas>
+    </div>
+
+    <!-- 3. Tabla de Acumulados -->
+    @if (reportData) {
+      <div class="chart-card table-card">
+        <h3 class="table-title">Acumulado a la fecha (Anual)</h3>
+        <table class="cumulative-table">
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Gasto del Mes</th>
+              <th>Total Acumulado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (month of reportData.labels; track month; let i = $index) {
+              <tr [class.hidden-row]="reportData.monthly_totals[i] === null">
+                <td>{{ month }}</td>
+                <td class="amount">
+                  {{ reportData.monthly_totals[i] | currency: 'ARS' : 'symbol-narrow' : '1.0-2' }}
+                </td>
+                <td class="amount cumulative">
+                  {{
+                    reportData.cumulative_totals[i] | currency: 'ARS' : 'symbol-narrow' : '1.0-2'
+                  }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>
