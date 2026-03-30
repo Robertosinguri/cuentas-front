@@ -17,7 +17,7 @@ export interface ReportData {
 export class ReportService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = `${environment.apiUrl}/reports`;
+    private apiUrl = `${environment.apiUrl}reports`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {

@@ -23,7 +23,7 @@ export interface Bill {
 export class BillService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = `${environment.apiUrl}/bills`;
+    private apiUrl = `${environment.apiUrl}bills`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {
