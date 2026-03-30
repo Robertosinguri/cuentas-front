@@ -17,7 +17,7 @@ export interface ReportData {
 export class ReportService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = `${environment.apiUrl}/reports/`;
+    private apiUrl = `${environment.apiUrl}/reports`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {
@@ -33,7 +33,7 @@ export class ReportService {
 
     getAnnualReport(): Observable<ReportData> {
         return this.getAuthHeaders().pipe(
-            switchMap(headers => this.http.get<ReportData>(`${this.apiUrl}annual`, { headers }))
+            switchMap(headers => this.http.get<ReportData>(`${this.apiUrl}/annual`, { headers }))
         );
     }
 }
