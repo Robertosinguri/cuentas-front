@@ -23,7 +23,7 @@ export interface Bill {
 export class BillService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = `${environment.apiUrl}bills`;
+    private apiUrl = `${environment.apiUrl}bills/`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {
@@ -45,7 +45,7 @@ export class BillService {
 
     createBill(bill: Partial<Bill>): Observable<Bill> {
         return this.getAuthHeaders().pipe(
-            switchMap(headers => this.http.post<Bill>(this.apiUrl + '/', bill, { headers }))
+            switchMap(headers => this.http.post<Bill>(this.apiUrl, bill, { headers }))
         );
     }
 
