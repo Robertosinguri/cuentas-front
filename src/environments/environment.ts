@@ -9,5 +9,5 @@ export const environment = {
         appId: "1:675633401540:web:085ca09a7cfb5cc3b54391",
         measurementId: "G-N57WKQSCJ6"
     },
-    apiUrl: 'https://api-cuentas.rsdev.dev/api/v1/'
+    apiUrl: 'https://api-cuentas.rsdev.dev/api/v1'
 };

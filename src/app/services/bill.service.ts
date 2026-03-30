@@ -23,7 +23,7 @@ export interface Bill {
 export class BillService {
     private http = inject(HttpClient);
     private auth = inject(Auth);
-    private apiUrl = `${environment.apiUrl}bills/`;
+    private apiUrl = `${environment.apiUrl}/bills/`;
     user$ = user(this.auth);
 
     private getAuthHeaders(): Observable<HttpHeaders> {
@@ -51,19 +51,19 @@ export class BillService {
 
     updateBill(billId: string, bill: Partial<Bill>): Observable<Bill> {
         return this.getAuthHeaders().pipe(
-            switchMap(headers => this.http.put<Bill>(`${this.apiUrl}/${billId}`, bill, { headers }))
+            switchMap(headers => this.http.put<Bill>(`${this.apiUrl}${billId}`, bill, { headers }))
         );
     }
 
     markAsPaid(billId: string): Observable<Bill> {
         return this.getAuthHeaders().pipe(
-            switchMap(headers => this.http.patch<Bill>(`${this.apiUrl}/${billId}/pay`, {}, { headers }))
+            switchMap(headers => this.http.patch<Bill>(`${this.apiUrl}${billId}/pay`, {}, { headers }))
         );
     }
 
     deleteBill(billId: string): Observable<any> {
         return this.getAuthHeaders().pipe(
-            switchMap(headers => this.http.delete(`${this.apiUrl}/${billId}`, { headers }))
+            switchMap(headers => this.http.delete(`${this.apiUrl}${billId}`, { headers }))
         );
     }
 }
